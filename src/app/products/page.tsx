@@ -1,10 +1,10 @@
-import { products } from "@/products";
+import { fetchProductList } from "@/api/fetchProducts";
 import { ProductList } from "@/ui/organisms/ProductList";
 
-export default function Products() {
-	return (
-		<main className="h-full w-full">
-			<ProductList products={products} />
-		</main>
-	);
+export const runtime = "edge";
+
+export default async function Products() {
+	const products = await fetchProductList();
+
+	return <ProductList products={products} />;
 }

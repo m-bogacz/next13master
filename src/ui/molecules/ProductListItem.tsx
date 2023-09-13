@@ -1,18 +1,17 @@
 import { type ProductItemType } from "../types";
-import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescription";
-import { ProductListItemCoverImage } from "@/ui/atoms/ProductListItemCoverImage";
+import { ActiveLink } from "../atoms/ActiveLink";
+import { ProductItem } from "../atoms/ProductItem";
 
 export const ProductListItem = ({
-	product: { name, description, coverImage },
+	product: { name, coverImage, price, productId, category },
 }: {
 	product: ProductItemType;
 }) => {
 	return (
-		<li className="cursor-pointer p-1">
-			<article>
-				<ProductListItemDescription name={name} description={description} />
-				<ProductListItemCoverImage src={coverImage.src} alt={coverImage.alt} />
-			</article>
+		<li className="cursor-pointer">
+			<ActiveLink href={`/product/${productId}`}>
+				<ProductItem name={name} coverImage={coverImage} price={price} category={category} />
+			</ActiveLink>
 		</li>
 	);
 };

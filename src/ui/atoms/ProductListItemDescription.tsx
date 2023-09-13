@@ -1,14 +1,21 @@
+import { getFormatPrice } from "@/utils/getFormatPrice";
+
 export const ProductListItemDescription = ({
 	name,
-	description,
+	price,
+	category,
 }: {
 	name: string;
-	description: string;
+	price: number;
+	category: string;
 }) => {
 	return (
-		<div className="flex flex-col justify-between">
-			<h3 className="text-lg font-semibold text-gray-900">{name}</h3>
-			<p className="text-sm text-gray-500">{description}</p>
-		</div>
+		<>
+			<section className="mt-3 flex items-center justify-between gap-1">
+				<h3 className="text-sm font-semibold text-slate-700">{name}</h3>
+				<p className="text-sm font-bold text-slate-900">{getFormatPrice(price / 100)}</p>
+			</section>
+			<span className="text-sm font-semibold text-slate-600">{category}</span>
+		</>
 	);
 };
