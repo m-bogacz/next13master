@@ -2,8 +2,6 @@ import { type Metadata } from "next";
 import { fetchProductById } from "@/api/fetchProducts";
 import { ProductItem } from "@/ui/atoms/ProductItem";
 
-export const runtime = "edge";
-
 export async function generateMetadata({
 	params,
 }: {
@@ -35,6 +33,7 @@ export default async function SingleProductPage({ params }: { params: { productI
 
 	return (
 		<main className="flex h-full w-full items-center justify-center">
+			<h1>{name}</h1>
 			<ProductItem coverImage={coverImage} name={name} price={price} category={category} />
 		</main>
 	);
