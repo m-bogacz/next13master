@@ -15,7 +15,7 @@ export interface ProductResponseEntity {
 }
 
 export const fetchProductList = async () => {
-	const response = await fetch(`https://naszsklep-api.vercel.app/api/products`);
+	const response = await fetch(`https://naszsklep-api.vercel.app/api/products?take=4`);
 	const data = (await response.json()) as ProductResponseEntity[];
 	return data.map(mappedProductToProductItemTypes);
 };
@@ -33,7 +33,7 @@ export const fetchProductById = async (id: string) => {
 	return mappedProductToProductItemTypes(data);
 };
 
-export const fetchProductsPerPage = async (page: string, count = 20) => {
+export const fetchProductsPerPage = async (page: string, count = 4) => {
 	const response = await fetch(
 		`https://naszsklep-api.vercel.app/api/products?take=${count}&offset=${page}`,
 	);

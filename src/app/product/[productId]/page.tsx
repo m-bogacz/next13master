@@ -1,18 +1,25 @@
 import { type Metadata } from "next";
-import { fetchProductById } from "@/api/fetchProducts";
-import { ProductItem } from "@/ui/atoms/ProductItem";
+import { fetchProductById, fetchProductList } from "@/api/fetchProducts";
+import { ProductItem } from "@/ui/atoms/SingleProductItem";
 
-export async function generateMetadata({
+export const generateStaticParams = async () => {
+	const products = await fetchProductList();
+
+	return products.map((product) => ({
+		productId: product.productId,
+	}));
+};
+
+export const generateMetadata = async ({
 	params,
 }: {
 	params: { productId: string };
-}): Promise<Metadata> {
+}): Promise<Metadata> => {
 	const product = await fetchProductById(params.productId);
 
 	return {
 		title: product.name,
 		description: product.description,
-		category: product.category,
 		openGraph: {
 			title: product.name,
 			description: product.description,
@@ -24,17 +31,22 @@ export async function generateMetadata({
 			],
 		},
 	};
-}
+};
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
 	const product = await fetchProductById(params.productId);
 
-	const { name, coverImage, price, category } = product;
+	const { name, coverImage, price, category, description } = product;
 
 	return (
-		<main className="flex h-full w-full items-center justify-center">
-			<h1>{name}</h1>
-			<ProductItem coverImage={coverImage} name={name} price={price} category={category} />
+		<main className="flex h-full w-full flex-col items-center justify-center">
+			<ProductItem
+				coverImage={coverImage}
+				name={name}
+				price={price}
+				category={category}
+				description={description}
+			/>
 		</main>
 	);
 }

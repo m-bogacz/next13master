@@ -20,14 +20,14 @@ export const ActiveLink = <T extends string>({
 	href,
 	children,
 	className = "text-sm text-gray-500 hover:text-gray-700",
-	activeClassName = "text-gray-800 underline",
-	exact = true,
+	activeClassName = "text-gray-800 border border-b-orange-600",
+	exact = false,
 }: ActiveLinkProps<T>) => {
 	const currentPathname = usePathname();
 	const pathname = getExtractPathname(href);
 
 	const slicePathname = currentPathname.slice(0, pathname.length);
-	const isActive = exact ? currentPathname === pathname : slicePathname === pathname;
+	const isActive = exact ? slicePathname === pathname : currentPathname === pathname;
 
 	return (
 		<Link href={href} className={clsx(className, isActive && activeClassName)}>

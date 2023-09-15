@@ -1,26 +1,18 @@
 import { fetchProductsCount } from "@/api/fetchProducts";
-import { Pagination } from "@/ui/organisms/Pagination";
-
-export const runtime = "edge";
 
 export const generateStaticParams = async () => {
 	const productsCount = await fetchProductsCount();
-	const counts = Array.from({ length: productsCount }, (_, i) => i + 1);
-
-	console.log(counts);
+	const counts = Array.from({ length: productsCount / 4 }, (_, i) => i + 1);
 
 	return counts.map((count) => ({
-		params: {
-			pageNumber: count,
-		},
+		pageNumber: count.toString(),
 	}));
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-	return (
-		<>
-			{children}
-			<Pagination />
-		</>
-	);
+type LayoutProps = {
+	children: React.ReactNode;
+};
+
+export default function Layout({ children }: LayoutProps) {
+	return <>{children}</>;
 }

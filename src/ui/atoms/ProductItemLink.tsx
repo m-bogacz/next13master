@@ -11,7 +11,7 @@ type ProductItemProps = {
 	category: string;
 };
 
-export const ProductItem = ({ name, coverImage, price, category }: ProductItemProps) => {
+export const ProductItemLink = ({ name, coverImage, price, category }: ProductItemProps) => {
 	return (
 		<article className="w-72 p-4">
 			<ProductListItemCoverImage src={coverImage.src} alt={coverImage.alt} />

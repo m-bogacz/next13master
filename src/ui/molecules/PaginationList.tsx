@@ -1,24 +1,15 @@
-"use client";
-import { useParams } from "next/navigation";
+import "server-only";
 import { PaginationItem } from "@/ui/atoms/PaginationItem";
-
-const getCurrentPage = (pageNumber: string | string[]) => {
-	if (typeof pageNumber === "string") {
-		return Number(pageNumber);
-	}
-	return Number(pageNumber[0]);
-};
 
 export const PaginationList = ({
 	productLength,
-	count = 20,
+	count = 4,
+	currentPage,
 }: {
 	productLength: number;
+	currentPage: number;
 	count?: number;
 }) => {
-	const params = useParams();
-	const currentPage = getCurrentPage(params.pageNumber ?? 1);
-
 	const pages = Array.from({ length: Math.ceil(productLength / count) }, (_, i) => i + 1);
 
 	return (
