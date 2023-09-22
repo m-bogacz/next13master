@@ -1,8 +1,8 @@
-import { PRODUCTS_COUNT_PER_PAGE } from "./settings";
 import { getProductCount, getProductListPerPage } from "@/api/getProductsList";
 import { Pagination } from "@/ui/organisms/Pagination";
 
 import { ProductList } from "@/ui/organisms/ProductList";
+import { PRODUCTS_COUNT_PER_PAGE } from "@/utils/const";
 import { getPaginationInfo } from "@/utils/getPaginationInfo";
 
 export const generateStaticParams = async () => {

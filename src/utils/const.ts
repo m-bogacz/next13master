@@ -1,1 +1,2 @@
 export const PRODUCTS_CATEGORY_COUNT_PER_PAGE = 2;
+export const PRODUCTS_COUNT_PER_PAGE = 4;

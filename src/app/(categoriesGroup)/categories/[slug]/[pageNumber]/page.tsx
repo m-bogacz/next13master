@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
-import { PRODUCTS_CATEGORY_COUNT_PER_PAGE } from "./settings";
+
 import {
 	getProductsByCategoryPerPage,
 	getCategoryNameBySlug,
@@ -9,6 +9,7 @@ import {
 import { ProductList } from "@/ui/organisms/ProductList";
 
 import { getPaginationInfo } from "@/utils/getPaginationInfo";
+import { PRODUCTS_CATEGORY_COUNT_PER_PAGE } from "@/utils/const";
 
 export const generateMetadata = async ({
 	params,

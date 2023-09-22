@@ -1,6 +1,6 @@
-import { PRODUCTS_CATEGORY_COUNT_PER_PAGE } from "./settings";
 import { getProductsCountByCategory } from "@/api/getProductsList";
 import { Pagination } from "@/ui/organisms/Pagination";
+import { PRODUCTS_CATEGORY_COUNT_PER_PAGE } from "@/utils/const";
 
 export default async function CategoryPageLayout({
 	children,
