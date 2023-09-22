@@ -1,12 +1,15 @@
 import { type Metadata } from "next";
-import { fetchProductById, fetchProductList } from "@/api/fetchProducts";
-import { ProductItem } from "@/ui/atoms/SingleProductItem";
+
+import { Suspense } from "react";
+import { ProductItem } from "@/ui/molecules/SingleProductItem";
+import { getProductById, getProductsList } from "@/api/getProductsList";
+import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 
 export const generateStaticParams = async () => {
-	const products = await fetchProductList();
+	const products = await getProductsList();
 
 	return products.map((product) => ({
-		productId: product.productId,
+		productId: product.id,
 	}));
 };
 
@@ -15,7 +18,7 @@ export const generateMetadata = async ({
 }: {
 	params: { productId: string };
 }): Promise<Metadata> => {
-	const product = await fetchProductById(params.productId);
+	const product = await getProductById(params.productId);
 
 	return {
 		title: product.name,
@@ -23,10 +26,10 @@ export const generateMetadata = async ({
 		openGraph: {
 			title: product.name,
 			description: product.description,
-			images: [
+			images: product.images[0] && [
 				{
-					url: product.coverImage.src,
-					alt: product.coverImage.alt,
+					url: product.images[0].url,
+					alt: product.name,
 				},
 			],
 		},
@@ -34,19 +37,24 @@ export const generateMetadata = async ({
 };
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
-	const product = await fetchProductById(params.productId);
-
-	const { name, coverImage, price, category, description } = product;
+	const product = await getProductById(params.productId);
 
 	return (
 		<main className="flex h-full w-full flex-col items-center justify-center">
 			<ProductItem
-				coverImage={coverImage}
-				name={name}
-				price={price}
-				category={category}
-				description={description}
+				coverImage={product.images[0]?.url}
+				name={product.name}
+				price={product.price}
+				category={product.categories[0]?.name ?? "other"}
+				description={product.description}
 			/>
+			<Suspense>
+				{product.categories[0]?.slug && (
+					<div>
+						<SuggestedProducts suggets={product.categories[0].slug} />
+					</div>
+				)}
+			</Suspense>
 		</main>
 	);
 }

@@ -1,0 +1,11 @@
+query ProductsGetList {
+	products {
+		...ProductListItem
+	}
+}
+
+query ProductsGetCountList($count: Int!) {
+	products(first: $count) {
+		...ProductListItem
+	}
+}

@@ -1,7 +1,13 @@
+import { type ProductListItemFragment } from "@/gql/graphql";
 import { ProductListItem } from "@/ui/molecules/ProductListItem";
-import { type ProductItemType } from "@/ui/types";
 
-export const ProductList = ({ products }: { products: ProductItemType[] }) => {
+export const ProductList = ({
+	products,
+	size = "medium",
+}: {
+	products: ProductListItemFragment[];
+	size?: "small" | "medium" | "big";
+}) => {
 	return (
 		<section className="sm:py-18 mx-auto flex w-full max-w-2xl flex-grow flex-col px-8 py-12 sm:px-6 lg:max-w-7xl">
 			<ul
@@ -9,7 +15,7 @@ export const ProductList = ({ products }: { products: ProductItemType[] }) => {
 				data-testid="products-list"
 			>
 				{products.map((product) => (
-					<ProductListItem key={product.productId} product={product} />
+					<ProductListItem size={size} key={product.id} product={product} />
 				))}
 			</ul>
 		</section>

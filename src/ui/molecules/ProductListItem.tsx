@@ -1,16 +1,26 @@
-import { type ProductItemType } from "../types";
 import { ActiveLink } from "../atoms/ActiveLink";
 import { ProductItemLink } from "../atoms/ProductItemLink";
 
+import { type ProductListItemFragment } from "@/gql/graphql";
+
 export const ProductListItem = ({
-	product: { name, coverImage, price, productId, category },
+	product,
+	size = "medium",
 }: {
-	product: ProductItemType;
+	product: ProductListItemFragment;
+	size: "small" | "medium" | "big";
 }) => {
+	const { name, images, price, categories } = product;
 	return (
 		<li className="cursor-pointer">
-			<ActiveLink href={`/product/${productId}`}>
-				<ProductItemLink name={name} coverImage={coverImage} price={price} category={category} />
+			<ActiveLink href={`/product/${product.id}`}>
+				<ProductItemLink
+					size={size}
+					name={name}
+					images={images}
+					price={price}
+					categories={categories}
+				/>
 			</ActiveLink>
 		</li>
 	);

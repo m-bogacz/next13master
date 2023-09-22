@@ -1,0 +1,7 @@
+fragment PaginationPageInfo on PageInfo {
+	hasNextPage
+	hasPreviousPage
+	startCursor
+	endCursor
+	pageSize
+}

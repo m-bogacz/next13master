@@ -1,0 +1,7 @@
+query ProdutsGetByCategorySlug($slug: String) {
+	categories(where: { slug: $slug }) {
+		products {
+			...ProductListItem
+		}
+	}
+}

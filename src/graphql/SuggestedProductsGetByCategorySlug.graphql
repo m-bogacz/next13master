@@ -1,0 +1,5 @@
+query SuggestedProductsGetByCategorySlug($slug: String!, $first: Int) {
+	products(first: $first, where: { categories_some: { slug: $slug } }) {
+		...ProductListItem
+	}
+}

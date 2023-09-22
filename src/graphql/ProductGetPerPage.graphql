@@ -1,0 +1,11 @@
+query ProductGetPerPage($first: Int, $skip: Int) {
+	products(first: $first, skip: $skip) {
+		...ProductListItem
+	}
+
+	productsConnection {
+		pageInfo {
+			...PaginationPageInfo
+		}
+	}
+}
