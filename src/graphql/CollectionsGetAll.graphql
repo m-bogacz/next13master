@@ -1,0 +1,9 @@
+query CollectionsGetAll {
+	collections {
+		name
+		slug
+		image {
+			url
+		}
+	}
+}
