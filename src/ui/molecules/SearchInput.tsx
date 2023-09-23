@@ -14,8 +14,6 @@ export const SearchInput = () => {
 	useEffect(() => {
 		if (debouncedValue.length >= 1) {
 			router.push(`/search?query=${debouncedValue}`);
-		} else if (debouncedValue.length === 0) {
-			router.push(`/`);
 		}
 	}, [router, debouncedValue]);
 

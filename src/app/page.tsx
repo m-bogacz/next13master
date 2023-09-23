@@ -29,7 +29,7 @@ export default async function Home() {
 			<ProductList products={products} />
 			<ActiveLink
 				href="/products"
-				className="flex-3 flex w-64 justify-center rounded-md border border-slate-300 p-1 align-baseline text-sm text-gray-500   hover:text-gray-700"
+				className="flex-3 my-6 flex justify-center rounded-md border border-slate-300 p-2 align-baseline text-sm text-gray-500   hover:text-gray-700"
 			>
 				See more <ArrowRight size={"1.2rem"} />
 			</ActiveLink>

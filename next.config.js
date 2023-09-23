@@ -3,9 +3,11 @@ const nextConfig = {
 	images: {
 		domains: ["media.graphassets.com"],
 	},
+	pageExtensions: ["ts", "tsx", "mdx"],
 	experimental: {
 		typedRoutes: true,
 		serverActions: true,
+		mdxRs: true,
 	},
 
 	redirects: async () => {
@@ -18,5 +20,5 @@ const nextConfig = {
 		];
 	},
 };
-
-module.exports = nextConfig;
+const withMDX = require("@next/mdx")();
+module.exports = withMDX(nextConfig);
