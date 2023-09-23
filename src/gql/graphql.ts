@@ -51,8 +51,6 @@ export type Asset = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  imageCategory: Array<Category>;
-  imageCollection: Array<Collection>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -106,34 +104,6 @@ export type AssetHistoryArgs = {
   limit?: Scalars['Int']['input'];
   skip?: Scalars['Int']['input'];
   stageOverride?: InputMaybe<Stage>;
-};
-
-
-/** Asset system model */
-export type AssetImageCategoryArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<CategoryOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<CategoryWhereInput>;
-};
-
-
-/** Asset system model */
-export type AssetImageCollectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<CollectionOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<CollectionWhereInput>;
 };
 
 
@@ -223,8 +193,6 @@ export type AssetCreateInput = {
   fileName: Scalars['String']['input'];
   handle: Scalars['String']['input'];
   height?: InputMaybe<Scalars['Float']['input']>;
-  imageCategory?: InputMaybe<CategoryCreateManyInlineInput>;
-  imageCollection?: InputMaybe<CollectionCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
   mimeType?: InputMaybe<Scalars['String']['input']>;
@@ -326,12 +294,6 @@ export type AssetManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  imageCategory_every?: InputMaybe<CategoryWhereInput>;
-  imageCategory_none?: InputMaybe<CategoryWhereInput>;
-  imageCategory_some?: InputMaybe<CategoryWhereInput>;
-  imageCollection_every?: InputMaybe<CollectionWhereInput>;
-  imageCollection_none?: InputMaybe<CollectionWhereInput>;
-  imageCollection_some?: InputMaybe<CollectionWhereInput>;
   productImages_every?: InputMaybe<ProductWhereInput>;
   productImages_none?: InputMaybe<ProductWhereInput>;
   productImages_some?: InputMaybe<ProductWhereInput>;
@@ -406,8 +368,6 @@ export type AssetUpdateInput = {
   fileName?: InputMaybe<Scalars['String']['input']>;
   handle?: InputMaybe<Scalars['String']['input']>;
   height?: InputMaybe<Scalars['Float']['input']>;
-  imageCategory?: InputMaybe<CategoryUpdateManyInlineInput>;
-  imageCollection?: InputMaybe<CollectionUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
   mimeType?: InputMaybe<Scalars['String']['input']>;
@@ -641,12 +601,6 @@ export type AssetWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  imageCategory_every?: InputMaybe<CategoryWhereInput>;
-  imageCategory_none?: InputMaybe<CategoryWhereInput>;
-  imageCategory_some?: InputMaybe<CategoryWhereInput>;
-  imageCollection_every?: InputMaybe<CollectionWhereInput>;
-  imageCollection_none?: InputMaybe<CollectionWhereInput>;
-  imageCollection_some?: InputMaybe<CollectionWhereInput>;
   mimeType?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   mimeType_contains?: InputMaybe<Scalars['String']['input']>;
@@ -773,7 +727,6 @@ export type Category = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  image?: Maybe<Asset>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -821,13 +774,6 @@ export type CategoryHistoryArgs = {
   limit?: Scalars['Int']['input'];
   skip?: Scalars['Int']['input'];
   stageOverride?: InputMaybe<Stage>;
-};
-
-
-/** Category of products, e.g. Menswear. */
-export type CategoryImageArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
 };
 
 
@@ -910,7 +856,6 @@ export type CategoryCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
-  image?: InputMaybe<AssetCreateOneInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<CategoryCreateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -1010,7 +955,6 @@ export type CategoryManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  image?: InputMaybe<AssetWhereInput>;
   products_every?: InputMaybe<ProductWhereInput>;
   products_none?: InputMaybe<ProductWhereInput>;
   products_some?: InputMaybe<ProductWhereInput>;
@@ -1070,7 +1014,6 @@ export type CategoryOrderByInput =
 export type CategoryUpdateInput = {
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
-  image?: InputMaybe<AssetUpdateOneInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<CategoryUpdateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -1261,7 +1204,6 @@ export type CategoryWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  image?: InputMaybe<AssetWhereInput>;
   name?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   name_contains?: InputMaybe<Scalars['String']['input']>;
@@ -1372,7 +1314,6 @@ export type Collection = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  image?: Maybe<Asset>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -1420,13 +1361,6 @@ export type CollectionHistoryArgs = {
   limit?: Scalars['Int']['input'];
   skip?: Scalars['Int']['input'];
   stageOverride?: InputMaybe<Stage>;
-};
-
-
-/** Collection of products, e.g. Winter Sale. */
-export type CollectionImageArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
 };
 
 
@@ -1509,7 +1443,6 @@ export type CollectionCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
-  image?: InputMaybe<AssetCreateOneInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<CollectionCreateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -1609,7 +1542,6 @@ export type CollectionManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  image?: InputMaybe<AssetWhereInput>;
   products_every?: InputMaybe<ProductWhereInput>;
   products_none?: InputMaybe<ProductWhereInput>;
   products_some?: InputMaybe<ProductWhereInput>;
@@ -1669,7 +1601,6 @@ export type CollectionOrderByInput =
 export type CollectionUpdateInput = {
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
-  image?: InputMaybe<AssetUpdateOneInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<CollectionUpdateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -1860,7 +1791,6 @@ export type CollectionWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  image?: InputMaybe<AssetWhereInput>;
   name?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   name_contains?: InputMaybe<Scalars['String']['input']>;
@@ -10754,7 +10684,7 @@ export type _SystemDateTimeFieldVariation =
 export type CategoriesGetSlugQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CategoriesGetSlugQuery = { categories: Array<{ slug: string, name: string, image?: { url: string } | null }> };
+export type CategoriesGetSlugQuery = { categories: Array<{ slug: string, name: string }> };
 
 export type CategoryNameGetBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -10769,11 +10699,6 @@ export type CollectionsNameGetBySlugQueryVariables = Exact<{
 
 
 export type CollectionsNameGetBySlugQuery = { collections: Array<{ id: string, name: string }> };
-
-export type CollectionsGetAllQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type CollectionsGetAllQuery = { collections: Array<{ name: string, slug: string, image?: { url: string } | null }> };
 
 export type PaginationPageInfoFragment = { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null, pageSize?: number | null };
 
@@ -10906,9 +10831,6 @@ export const CategoriesGetSlugDocument = new TypedDocumentString(`
   categories {
     slug
     name
-    image {
-      url
-    }
   }
 }
     `) as unknown as TypedDocumentString<CategoriesGetSlugQuery, CategoriesGetSlugQueryVariables>;
@@ -10927,17 +10849,6 @@ export const CollectionsNameGetBySlugDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CollectionsNameGetBySlugQuery, CollectionsNameGetBySlugQueryVariables>;
-export const CollectionsGetAllDocument = new TypedDocumentString(`
-    query CollectionsGetAll {
-  collections {
-    name
-    slug
-    image {
-      url
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<CollectionsGetAllQuery, CollectionsGetAllQueryVariables>;
 export const ProductCountDocument = new TypedDocumentString(`
     query ProductCount {
   productsConnection {
