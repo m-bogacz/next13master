@@ -48,7 +48,7 @@ export default async function Categories({
 	if (!data.categories[0]?.products || data.categories[0]?.products.length === 0) notFound();
 
 	return (
-		<div>
+		<div className="mt-15">
 			<h1>{category}</h1>
 			<ProductList products={data.categories[0].products} />
 		</div>

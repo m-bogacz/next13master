@@ -1,29 +1,13 @@
 import { ArrowRight } from "lucide-react";
-
-import { type Route } from "next";
 import { getProductsCountList } from "@/api/getProductsList";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 import { ProductList } from "@/ui/organisms/ProductList";
-
-const subPagesCollections = [
-	{ href: "/collections/new-in", label: "New In" },
-	{ href: "/collections/throwback", label: "Throwback" },
-];
 
 export default async function Home() {
 	const products = await getProductsCountList();
 
 	return (
 		<main className="flex flex-col items-center">
-			<div>
-				{subPagesCollections.map(({ href, label }) => {
-					return (
-						<ActiveLink href={href as Route} key={href}>
-							{label}
-						</ActiveLink>
-					);
-				})}
-			</div>
 			<ProductList products={products} />
 			<ActiveLink
 				href="/products"

@@ -14,6 +14,7 @@ import {
 	SuggestedProductsGetByCategorySlugDocument,
 	ProductsSearchByNameDocument,
 	CategoriesGetSlugDocument,
+	CollectionsGetAllDocument,
 } from "@/gql/graphql";
 
 export const executeGraphql = async <TResult, TVariables>(
@@ -140,4 +141,9 @@ export const getCategoriesBySlug = async () => {
 	const graphqlResponse = await executeGraphql(CategoriesGetSlugDocument, {});
 
 	return graphqlResponse.categories;
+};
+export const getColelctionsAll = async () => {
+	const graphqlResponse = await executeGraphql(CollectionsGetAllDocument, {});
+
+	return graphqlResponse.collections;
 };

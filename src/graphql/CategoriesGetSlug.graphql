@@ -2,5 +2,8 @@ query CategoriesGetSlug {
 	categories {
 		slug
 		name
+		image {
+			url
+		}
 	}
 }

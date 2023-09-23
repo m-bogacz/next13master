@@ -8,7 +8,7 @@ import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 export const generateStaticParams = async () => {
 	const products = await getProductsList();
 
-	return products.map((product) => ({
+	return products.slice(0, 2).map((product) => ({
 		productId: product.id,
 	}));
 };
