@@ -1,0 +1,5 @@
+mutation CartRemoveOrderItem($itemId: ID!) {
+	deleteOrderItem(where: { id: $itemId }) {
+		id
+	}
+}

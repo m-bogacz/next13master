@@ -1,17 +1,18 @@
 import { type Metadata } from "next";
 
 import { Suspense } from "react";
+import { notFound } from "next/navigation";
 import { ProductItem } from "@/ui/molecules/SingleProductItem";
-import { getProductById, getProductsList } from "@/api/getProductsList";
+import { getProductById } from "@/api/getProductsList";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 
-export const generateStaticParams = async () => {
-	const products = await getProductsList();
+// export const generateStaticParams = async () => {
+// 	const products = await getProductsList();
 
-	return products.map((product) => ({
-		productId: product.id,
-	}));
-};
+// 	return products.map((product) => ({
+// 		productId: product.id,
+// 	}));
+// };
 
 export const generateMetadata = async ({
 	params,
@@ -39,16 +40,15 @@ export const generateMetadata = async ({
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
 	const product = await getProductById(params.productId);
 
+	if (!product) {
+		throw notFound();
+	}
+
 	return (
 		<main className="flex h-full w-full flex-col items-center justify-center">
-			<ProductItem
-				coverImage={product.images[0]?.url}
-				name={product.name}
-				price={product.price}
-				category={product.categories[0]?.name ?? "other"}
-				description={product.description}
-			/>
-			<Suspense>
+			<ProductItem {...product} />
+
+			<Suspense fallback="loading...">
 				{product.categories[0]?.slug && (
 					<div>
 						<SuggestedProducts suggets={product.categories[0].slug} />
