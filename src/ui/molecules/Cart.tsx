@@ -1,9 +1,9 @@
 import { ShoppingCart } from "lucide-react";
 import { ActiveLink } from "../atoms/ActiveLink";
-import { getCartByFromCookies } from "@/api/cartApi";
+import { getCart } from "@/api/cartApi";
 
 export const Cart = async () => {
-	const cart = await getCartByFromCookies();
+	const cart = await getCart();
 	return (
 		<ActiveLink
 			href={"/cart"}

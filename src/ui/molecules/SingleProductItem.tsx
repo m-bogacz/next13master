@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import { SuggestedProducts } from "../organisms/SuggestedProducts";
 import { getFormatPrice } from "@/utils/getFormatPrice";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { type ProductListItemFragment } from "@/gql/graphql";
@@ -46,13 +44,6 @@ export const ProductItem = ({
 					</form>
 				</div>
 			</div>
-			<Suspense fallback="loading...">
-				{categories[0] && (
-					<div>
-						<SuggestedProducts suggets={categories[0].slug} />
-					</div>
-				)}
-			</Suspense>
 		</article>
 	);
 };

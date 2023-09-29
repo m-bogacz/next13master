@@ -45,6 +45,7 @@ export async function executeGraphql<TResult, TVariables>({
 		next,
 		headers: {
 			...headers,
+			Webhook: process.env.WEBHOOK_HEADERS ?? "",
 			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 			"Content-Type": "application/json",
 		},
