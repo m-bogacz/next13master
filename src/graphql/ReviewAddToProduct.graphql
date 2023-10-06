@@ -18,4 +18,7 @@ mutation addReview(
 	) {
 		id
 	}
+	publishReview(to: PUBLISHED, where: { id: $productId }) {
+		id
+	}
 }

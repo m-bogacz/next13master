@@ -10879,7 +10879,7 @@ export type AddReviewMutationVariables = Exact<{
 }>;
 
 
-export type AddReviewMutation = { createReview?: { id: string } | null };
+export type AddReviewMutation = { createReview?: { id: string } | null, publishReview?: { id: string } | null };
 
 export type PublishReviewMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -11348,6 +11348,9 @@ export const AddReviewDocument = new TypedDocumentString(`
   createReview(
     data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $productId}}}
   ) {
+    id
+  }
+  publishReview(to: PUBLISHED, where: {id: $productId}) {
     id
   }
 }

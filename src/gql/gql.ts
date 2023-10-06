@@ -36,7 +36,7 @@ const documents = {
     "query ProdutsGetByCategorySlug($slug: String) {\n  categories(where: {slug: $slug}) {\n    products {\n      ...ProductListItem\n    }\n  }\n}": types.ProdutsGetByCategorySlugDocument,
     "query ProductsGetList {\n  products {\n    ...ProductListItem\n  }\n}\n\nquery ProductsGetCountList($count: Int!) {\n  products(first: $count) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListDocument,
     "query ProductsSearchByName($name: String!) {\n  products(where: {name_contains: $name}) {\n    ...ProductListItem\n  }\n}": types.ProductsSearchByNameDocument,
-    "mutation addReview($productId: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {\n  createReview(\n    data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $productId}}}\n  ) {\n    id\n  }\n}": types.AddReviewDocument,
+    "mutation addReview($productId: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {\n  createReview(\n    data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $productId}}}\n  ) {\n    id\n  }\n  publishReview(to: PUBLISHED, where: {id: $productId}) {\n    id\n  }\n}": types.AddReviewDocument,
     "mutation publishReview($id: ID!) {\n  publishReview(where: {id: $id}, to: PUBLISHED) {\n    id\n  }\n}": types.PublishReviewDocument,
     "query ReviewsGetProductById($productId: ID) {\n  product(where: {id: $productId}) {\n    reviews {\n      ...ReviewsProductItem\n    }\n  }\n}": types.ReviewsGetProductByIdDocument,
     "fragment ReviewsProductItem on Review {\n  name\n  headline\n  rating\n  content\n  id\n}": types.ReviewsProductItemFragmentDoc,
@@ -134,7 +134,7 @@ export function graphql(source: "query ProductsSearchByName($name: String!) {\n 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation addReview($productId: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {\n  createReview(\n    data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $productId}}}\n  ) {\n    id\n  }\n}"): typeof import('./graphql').AddReviewDocument;
+export function graphql(source: "mutation addReview($productId: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {\n  createReview(\n    data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $productId}}}\n  ) {\n    id\n  }\n  publishReview(to: PUBLISHED, where: {id: $productId}) {\n    id\n  }\n}"): typeof import('./graphql').AddReviewDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

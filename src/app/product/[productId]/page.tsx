@@ -47,8 +47,9 @@ export default async function SingleProductPage({ params }: { params: { productI
 					</div>
 				)}
 			</Suspense>
-
-			<Reviews id={product.id} reviews={product.reviews} />
+			<Suspense fallback="loading...">
+				<Reviews id={product.id} reviews={product.reviews} />
+			</Suspense>
 		</main>
 	);
 }

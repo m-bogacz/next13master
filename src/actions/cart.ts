@@ -6,7 +6,6 @@ import {
 	AddReviewDocument,
 	CartChangeOrderItemQuantityDocument,
 	CartRemoveOrderItemDocument,
-	PublishReviewDocument,
 } from "@/gql/graphql";
 
 export const changeOrderItemQuantity = async (itemId: string, quantity: number) => {
@@ -47,15 +46,6 @@ export const addReview = async ({
 		query: AddReviewDocument,
 		variables: { productId, headline, name, email, rating, content },
 	});
-	if (result.createReview && result.createReview.id) {
-		await executeGraphql({
-			query: PublishReviewDocument,
-			variables: { id: result.createReview.id },
-			next: {
-				tags: [`/reviews/[productId]`],
-			},
-		});
-	}
 
 	return result;
 };
