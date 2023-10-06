@@ -4,12 +4,13 @@ import { type Metadata } from "next";
 import {
 	getProductsByCategoryPerPage,
 	getCategoryNameBySlug,
-	getCategoriesBySlug,
+	getProductsCountByCategory,
 } from "@/api/getProductsList";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 import { getPaginationInfo } from "@/utils/getPaginationInfo";
 import { PRODUCTS_CATEGORY_COUNT_PER_PAGE } from "@/utils/const";
+import { Pagination } from "@/ui/organisms/Pagination";
 
 export const generateMetadata = async ({
 	params,
@@ -24,19 +25,12 @@ export const generateMetadata = async ({
 	};
 };
 
-export const generateStaticParams = async () => {
-	const categories = await getCategoriesBySlug();
-
-	return categories.map((category) => ({
-		slug: category.slug,
-	}));
-};
-
 export default async function Categories({
 	params,
 }: {
 	params: { category: string; slug: string; pageNumber: number };
 }) {
+	const categories = await getProductsCountByCategory(params.slug);
 	const category = await getCategoryNameBySlug(params.slug);
 
 	const [showProducts, skipProduct] = getPaginationInfo(
@@ -51,6 +45,12 @@ export default async function Categories({
 		<div>
 			<h1>{category}</h1>
 			<ProductList products={data.categories[0].products} />
+			<article className="mt-5">
+				<Pagination
+					countPerPage={PRODUCTS_CATEGORY_COUNT_PER_PAGE}
+					productsCount={categories ?? 0}
+				/>
+			</article>
 		</div>
 	);
 }

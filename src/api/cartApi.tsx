@@ -41,7 +41,7 @@ export async function getCart() {
 	}
 }
 export function createCart() {
-	return executeGraphql({ query: CartCreateDocument });
+	return executeGraphql({ query: CartCreateDocument, type: "mutation" });
 }
 
 export async function addProductToCart(orderId: string, productId: string) {
