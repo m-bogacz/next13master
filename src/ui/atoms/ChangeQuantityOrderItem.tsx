@@ -22,6 +22,7 @@ export function ChangeQuantityOrderItem({
 					<button
 						className="h-6 w-6 border"
 						type="submit"
+						data-testid="decrement"
 						formAction={async () => {
 							setOptimisticQuantity(optimisticQuantity - 1);
 							await changeOrderItemQuantity(itemId, optimisticQuantity - 1);
@@ -30,11 +31,14 @@ export function ChangeQuantityOrderItem({
 						-
 					</button>
 				</form>
-				<span className="w-8 text-center">{optimisticQuantity}</span>
+				<span data-testid="quantity" className="w-8 text-center">
+					{optimisticQuantity}
+				</span>
 				<form className="flex">
 					<button
 						className="h-6 w-6 items-baseline border"
 						type="submit"
+						data-testid="increment"
 						formAction={async () => {
 							setOptimisticQuantity(optimisticQuantity + 1);
 							await changeOrderItemQuantity(itemId, optimisticQuantity + 1);

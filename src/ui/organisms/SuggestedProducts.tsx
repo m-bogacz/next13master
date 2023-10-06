@@ -2,12 +2,8 @@ import { getSuggestedProductsByCategorySlug } from "@/api/getProductsList";
 
 import { ProductListItem } from "@/ui/molecules/ProductListItem";
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export const SuggestedProducts = async ({ suggets }: { suggets: string }) => {
 	const products = await getSuggestedProductsByCategorySlug(suggets);
-
-	await sleep(10000);
 
 	return (
 		<section className="sm:py-18 mx-auto flex w-full max-w-2xl flex-grow flex-col px-8 py-12 sm:px-6 lg:max-w-7xl">

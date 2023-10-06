@@ -17,6 +17,11 @@ const nextConfig = {
 				destination: "/products/1",
 				permanent: false,
 			},
+			{
+				source: "/collections",
+				destination: "/collections/summer-vibes",
+				permanent: false,
+			},
 		];
 	},
 };

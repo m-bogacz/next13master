@@ -51,7 +51,6 @@ export type Asset = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  imageCategory: Array<Category>;
   imageCollection: Array<Collection>;
   /** System Locale field */
   locale: Locale;
@@ -106,20 +105,6 @@ export type AssetHistoryArgs = {
   limit?: Scalars['Int']['input'];
   skip?: Scalars['Int']['input'];
   stageOverride?: InputMaybe<Stage>;
-};
-
-
-/** Asset system model */
-export type AssetImageCategoryArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<CategoryOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<CategoryWhereInput>;
 };
 
 
@@ -223,7 +208,6 @@ export type AssetCreateInput = {
   fileName: Scalars['String']['input'];
   handle: Scalars['String']['input'];
   height?: InputMaybe<Scalars['Float']['input']>;
-  imageCategory?: InputMaybe<CategoryCreateManyInlineInput>;
   imageCollection?: InputMaybe<CollectionCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
@@ -326,9 +310,6 @@ export type AssetManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  imageCategory_every?: InputMaybe<CategoryWhereInput>;
-  imageCategory_none?: InputMaybe<CategoryWhereInput>;
-  imageCategory_some?: InputMaybe<CategoryWhereInput>;
   imageCollection_every?: InputMaybe<CollectionWhereInput>;
   imageCollection_none?: InputMaybe<CollectionWhereInput>;
   imageCollection_some?: InputMaybe<CollectionWhereInput>;
@@ -406,7 +387,6 @@ export type AssetUpdateInput = {
   fileName?: InputMaybe<Scalars['String']['input']>;
   handle?: InputMaybe<Scalars['String']['input']>;
   height?: InputMaybe<Scalars['Float']['input']>;
-  imageCategory?: InputMaybe<CategoryUpdateManyInlineInput>;
   imageCollection?: InputMaybe<CollectionUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
@@ -641,9 +621,6 @@ export type AssetWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  imageCategory_every?: InputMaybe<CategoryWhereInput>;
-  imageCategory_none?: InputMaybe<CategoryWhereInput>;
-  imageCategory_some?: InputMaybe<CategoryWhereInput>;
   imageCollection_every?: InputMaybe<CollectionWhereInput>;
   imageCollection_none?: InputMaybe<CollectionWhereInput>;
   imageCollection_some?: InputMaybe<CollectionWhereInput>;
@@ -773,7 +750,6 @@ export type Category = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  image?: Maybe<Asset>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -821,13 +797,6 @@ export type CategoryHistoryArgs = {
   limit?: Scalars['Int']['input'];
   skip?: Scalars['Int']['input'];
   stageOverride?: InputMaybe<Stage>;
-};
-
-
-/** Category of products, e.g. Menswear. */
-export type CategoryImageArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
 };
 
 
@@ -910,7 +879,6 @@ export type CategoryCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
-  image?: InputMaybe<AssetCreateOneInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<CategoryCreateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -1010,7 +978,6 @@ export type CategoryManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  image?: InputMaybe<AssetWhereInput>;
   products_every?: InputMaybe<ProductWhereInput>;
   products_none?: InputMaybe<ProductWhereInput>;
   products_some?: InputMaybe<ProductWhereInput>;
@@ -1070,7 +1037,6 @@ export type CategoryOrderByInput =
 export type CategoryUpdateInput = {
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
-  image?: InputMaybe<AssetUpdateOneInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<CategoryUpdateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -1261,7 +1227,6 @@ export type CategoryWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  image?: InputMaybe<AssetWhereInput>;
   name?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   name_contains?: InputMaybe<Scalars['String']['input']>;
@@ -1372,7 +1337,7 @@ export type Collection = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  image?: Maybe<Asset>;
+  image: Asset;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -1509,7 +1474,7 @@ export type CollectionCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
-  image?: InputMaybe<AssetCreateOneInlineInput>;
+  image: AssetCreateOneInlineInput;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<CollectionCreateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -2545,7 +2510,6 @@ export type ImageTransformationInput = {
 
 /** Locale system enumeration */
 export type Locale =
-  | 'de'
   /** System locale */
   | 'en';
 
@@ -4540,7 +4504,7 @@ export type Order = Node & {
   createdBy?: Maybe<User>;
   /** Get the document in other stages */
   documentInStages: Array<Order>;
-  email: Scalars['String']['output'];
+  email?: Maybe<Scalars['String']['output']>;
   /** List of Order versions */
   history: Array<Version>;
   /** The unique identifier */
@@ -4553,7 +4517,7 @@ export type Order = Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
-  stripeCheckoutId: Scalars['String']['output'];
+  stripeCheckoutId?: Maybe<Scalars['String']['output']>;
   total: Scalars['Int']['output'];
   /** The time the document was updated */
   updatedAt: Scalars['DateTime']['output'];
@@ -4636,9 +4600,9 @@ export type OrderConnection = {
 
 export type OrderCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  email: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
   orderItems?: InputMaybe<OrderItemCreateManyInlineInput>;
-  stripeCheckoutId: Scalars['String']['input'];
+  stripeCheckoutId?: InputMaybe<Scalars['String']['input']>;
   total: Scalars['Int']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -8653,7 +8617,7 @@ export type Review = Node & {
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
-  rating?: Maybe<Scalars['Int']['output']>;
+  rating: Scalars['Int']['output'];
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
@@ -8736,7 +8700,7 @@ export type ReviewCreateInput = {
   headline: Scalars['String']['input'];
   name: Scalars['String']['input'];
   product?: InputMaybe<ProductCreateOneInlineInput>;
-  rating?: InputMaybe<Scalars['Int']['input']>;
+  rating: Scalars['Int']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -10791,6 +10755,16 @@ export type CartRemoveOrderItemMutationVariables = Exact<{
 
 export type CartRemoveOrderItemMutation = { deleteOrderItem?: { id: string } | null };
 
+export type CartUpsertOrderItemMutationVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+  productId: Scalars['ID']['input'];
+  quantity: Scalars['Int']['input'];
+  orderItemId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type CartUpsertOrderItemMutation = { upsertOrderItem?: { id: string } | null };
+
 export type CategoriesGetSlugQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -10813,7 +10787,7 @@ export type CollectionsNameGetBySlugQuery = { collections: Array<{ id: string, n
 export type CollectionsGetAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CollectionsGetAllQuery = { collections: Array<{ name: string, slug: string, image?: { url: string } | null }> };
+export type CollectionsGetAllQuery = { collections: Array<{ name: string, slug: string, image: { url: string } }> };
 
 export type PaginationPageInfoFragment = { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null, pageSize?: number | null };
 
@@ -10834,14 +10808,14 @@ export type ProductGetByCollectionsSlugQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByCollectionsSlugQuery = { collections: Array<{ products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> }> };
+export type ProductGetByCollectionsSlugQuery = { collections: Array<{ name: string, products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> }> };
 
 export type ProductGetByIdQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
-export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> } | null };
+export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, reviews: Array<{ name: string, headline: string, rating: number, content: string, id: string }>, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> } | null };
 
 export type ProductGetPerPageQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -10894,6 +10868,34 @@ export type ProductsSearchByNameQueryVariables = Exact<{
 
 
 export type ProductsSearchByNameQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> };
+
+export type AddReviewMutationVariables = Exact<{
+  productId: Scalars['ID']['input'];
+  headline: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  rating: Scalars['Int']['input'];
+}>;
+
+
+export type AddReviewMutation = { createReview?: { id: string } | null };
+
+export type PublishReviewMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type PublishReviewMutation = { publishReview?: { id: string } | null };
+
+export type ReviewsGetProductByIdQueryVariables = Exact<{
+  productId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type ReviewsGetProductByIdQuery = { product?: { reviews: Array<{ name: string, headline: string, rating: number, content: string, id: string }> } | null };
+
+export type ReviewsProductItemFragment = { name: string, headline: string, rating: number, content: string, id: string };
 
 export type SuggestedProductsGetByCategorySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -10991,6 +10993,15 @@ export const PaginationPageInfoFragmentDoc = new TypedDocumentString(`
   pageSize
 }
     `, {"fragmentName":"PaginationPageInfo"}) as unknown as TypedDocumentString<PaginationPageInfoFragment, unknown>;
+export const ReviewsProductItemFragmentDoc = new TypedDocumentString(`
+    fragment ReviewsProductItem on Review {
+  name
+  headline
+  rating
+  content
+  id
+}
+    `, {"fragmentName":"ReviewsProductItem"}) as unknown as TypedDocumentString<ReviewsProductItemFragment, unknown>;
 export const CartAddProductDocument = new TypedDocumentString(`
     mutation CartAddProduct($orderId: ID!, $productId: ID!, $total: Int!) {
   createOrderItem(
@@ -11080,6 +11091,16 @@ export const CartRemoveOrderItemDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CartRemoveOrderItemMutation, CartRemoveOrderItemMutationVariables>;
+export const CartUpsertOrderItemDocument = new TypedDocumentString(`
+    mutation CartUpsertOrderItem($orderId: ID!, $productId: ID!, $quantity: Int!, $orderItemId: ID) {
+  upsertOrderItem(
+    upsert: {create: {quantity: 1, total: 1, product: {connect: {id: $productId}}, order: {connect: {id: $orderId}}}, update: {quantity: $quantity}}
+    where: {id: $orderItemId}
+  ) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<CartUpsertOrderItemMutation, CartUpsertOrderItemMutationVariables>;
 export const CategoriesGetSlugDocument = new TypedDocumentString(`
     query CategoriesGetSlug {
   categories {
@@ -11135,6 +11156,7 @@ export const ProductsCountByCategoryDocument = new TypedDocumentString(`
 export const ProductGetByCollectionsSlugDocument = new TypedDocumentString(`
     query ProductGetByCollectionsSlug($slug: String) {
   collections(where: {slug: $slug}) {
+    name
     products {
       ...ProductListItem
     }
@@ -11157,6 +11179,9 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID) {
   product(where: {id: $id}) {
     ...ProductListItem
+    reviews {
+      ...ReviewsProductItem
+    }
   }
 }
     fragment ProductListItem on Product {
@@ -11171,6 +11196,13 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
   images(first: 1) {
     url
   }
+}
+fragment ReviewsProductItem on Review {
+  name
+  headline
+  rating
+  content
+  id
 }`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductGetPerPageDocument = new TypedDocumentString(`
     query ProductGetPerPage($first: Int, $skip: Int) {
@@ -11311,6 +11343,37 @@ export const ProductsSearchByNameDocument = new TypedDocumentString(`
     url
   }
 }`) as unknown as TypedDocumentString<ProductsSearchByNameQuery, ProductsSearchByNameQueryVariables>;
+export const AddReviewDocument = new TypedDocumentString(`
+    mutation addReview($productId: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {
+  createReview(
+    data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $productId}}}
+  ) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<AddReviewMutation, AddReviewMutationVariables>;
+export const PublishReviewDocument = new TypedDocumentString(`
+    mutation publishReview($id: ID!) {
+  publishReview(where: {id: $id}, to: PUBLISHED) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<PublishReviewMutation, PublishReviewMutationVariables>;
+export const ReviewsGetProductByIdDocument = new TypedDocumentString(`
+    query ReviewsGetProductById($productId: ID) {
+  product(where: {id: $productId}) {
+    reviews {
+      ...ReviewsProductItem
+    }
+  }
+}
+    fragment ReviewsProductItem on Review {
+  name
+  headline
+  rating
+  content
+  id
+}`) as unknown as TypedDocumentString<ReviewsGetProductByIdQuery, ReviewsGetProductByIdQueryVariables>;
 export const SuggestedProductsGetByCategorySlugDocument = new TypedDocumentString(`
     query SuggestedProductsGetByCategorySlug($slug: String!, $first: Int) {
   products(first: $first, where: {categories_some: {slug: $slug}}) {

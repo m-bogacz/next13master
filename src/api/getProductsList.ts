@@ -15,6 +15,7 @@ import {
 	ProductsSearchByNameDocument,
 	CategoriesGetSlugDocument,
 	CollectionsGetAllDocument,
+	ReviewsGetProductByIdDocument,
 } from "@/gql/graphql";
 
 export async function executeGraphql<TResult, TVariables>({
@@ -23,17 +24,22 @@ export async function executeGraphql<TResult, TVariables>({
 	cache,
 	next,
 	headers,
+	type = "query",
 }: {
 	query: TypedDocumentString<TResult, TVariables>;
 	cache?: RequestCache;
 	headers?: HeadersInit;
 	next?: NextFetchRequestConfig | undefined;
+	type?: "query" | "mutation";
 } & (TVariables extends { [key: string]: never }
 	? { variables?: never }
 	: { variables: TVariables })): Promise<TResult> {
 	if (!process.env.GRAPHQL_URL) {
 		throw TypeError("GRAPHQL_URL is not defined");
 	}
+
+	const HYGRAPH_TOKEN =
+		type === "query" ? process.env.HYGRAPH_QUERY_TOKEN : process.env.HYGRAPH_MUTATION_TOKEN;
 
 	const res = await fetch(process.env.GRAPHQL_URL, {
 		method: "POST",
@@ -45,8 +51,7 @@ export async function executeGraphql<TResult, TVariables>({
 		next,
 		headers: {
 			...headers,
-			Webhook: process.env.WEBHOOK_HEADERS ?? "",
-			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
+			Authorization: `Bearer ${HYGRAPH_TOKEN}`,
 			"Content-Type": "application/json",
 		},
 	});
@@ -147,7 +152,7 @@ export const getProductsByCollectionsSlug = async (slug: string) => {
 		variables: { slug },
 	});
 
-	return graphqlResponse.collections[0]?.products;
+	return graphqlResponse.collections[0];
 };
 
 export const getCategoryNameBySlug = async (slug: string) => {
@@ -199,4 +204,18 @@ export const getCollectionsAll = async () => {
 	const graphqlResponse = await executeGraphql({ query: CollectionsGetAllDocument });
 
 	return graphqlResponse.collections;
+};
+
+export const getReviewsByProductId = async (id: string) => {
+	const graphqlResponse = await executeGraphql({
+		query: ReviewsGetProductByIdDocument,
+		variables: { productId: id },
+
+		next: {
+			revalidate: 30,
+			tags: [`reviews`],
+		},
+	});
+
+	return graphqlResponse.product?.reviews;
 };

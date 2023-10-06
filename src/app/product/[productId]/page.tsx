@@ -6,6 +6,8 @@ import { ProductItem } from "@/ui/molecules/SingleProductItem";
 import { getProductById } from "@/api/getProductsList";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 
+import { Reviews } from "@/ui/organisms/Reviews";
+
 // export const generateStaticParams = async () => {
 // 	const products = await getProductsList();
 
@@ -24,16 +26,6 @@ export const generateMetadata = async ({
 	return {
 		title: product.name,
 		description: product.description,
-		openGraph: {
-			title: product.name,
-			description: product.description,
-			images: product.images[0] && [
-				{
-					url: product.images[0].url,
-					alt: product.name,
-				},
-			],
-		},
 	};
 };
 
@@ -55,6 +47,8 @@ export default async function SingleProductPage({ params }: { params: { productI
 					</div>
 				)}
 			</Suspense>
+
+			<Reviews id={product.id} reviews={product.reviews} />
 		</main>
 	);
 }

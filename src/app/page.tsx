@@ -17,7 +17,7 @@ export default async function Home() {
 					{collections.map((collection) => {
 						return (
 							<li key={collection.name}>
-								<ActiveLink exact={true} href={`collections/${collection.slug}` as Route}>
+								<ActiveLink exact={true} href={`/collections/${collection.slug}` as Route}>
 									<span>{collection.name}</span>
 									{collection.image && collection.image.url ? (
 										<ProductImage src={collection.image.url} alt={collection.name} />
