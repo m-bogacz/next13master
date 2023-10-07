@@ -1,6 +1,11 @@
-query ProductsGetByCategoryPerPage($slug: String, $first: Int, $skip: Int) {
+query ProductsGetByCategoryPerPage(
+	$slug: String
+	$first: Int
+	$skip: Int
+	$orderBy: ProductOrderByInput
+) {
 	categories(where: { slug: $slug }) {
-		products(first: $first, skip: $skip) {
+		products(first: $first, skip: $skip, orderBy: $orderBy) {
 			...ProductListItem
 		}
 	}

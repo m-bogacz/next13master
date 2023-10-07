@@ -1,4 +1,5 @@
 import { getProductCount, getProductListPerPage } from "@/api/getProductsList";
+import { type ProductOrderByInput } from "@/gql/graphql";
 import { Pagination } from "@/ui/organisms/Pagination";
 
 import { ProductList } from "@/ui/organisms/ProductList";
@@ -15,20 +16,34 @@ import { getPaginationInfo } from "@/utils/getPaginationInfo";
 // 	}));
 // };
 
-export default async function Products({ params }: { params: { pageNumber: number } }) {
+export default async function Products({
+	params,
+	searchParams,
+}: {
+	params: { pageNumber: number };
+	searchParams: { sortBy: ProductOrderByInput };
+}) {
 	const productsCount = await getProductCount();
 
-	const [productsPerPage, skipProduct] = getPaginationInfo(
+	const { productsPerPage, skipProduct } = getPaginationInfo(
 		params.pageNumber,
 		PRODUCTS_COUNT_PER_PAGE,
 	);
-	const data = await getProductListPerPage(productsPerPage, skipProduct);
+	const data = await getProductListPerPage({
+		first: productsPerPage,
+		skip: skipProduct,
+		orderBy: searchParams.sortBy,
+	});
 
 	return (
 		<div>
 			<ProductList products={data.products} />
 			<div className="mt-auto">
-				<Pagination countPerPage={PRODUCTS_COUNT_PER_PAGE} productsCount={productsCount} />
+				<Pagination
+					sortBy={searchParams.sortBy}
+					countPerPage={PRODUCTS_COUNT_PER_PAGE}
+					productsCount={productsCount}
+				/>
 			</div>
 		</div>
 	);

@@ -10,7 +10,7 @@ export const ProductListItem = ({
 	product: ProductListItemFragment;
 	size: "small" | "medium" | "big";
 }) => {
-	const { name, images, price, categories } = product;
+	const { name, images, price, categories, averageRating } = product;
 	return (
 		<li className="cursor-pointer">
 			<ActiveLink href={`/product/${product.id}`}>
@@ -20,6 +20,7 @@ export const ProductListItem = ({
 					images={images}
 					price={price}
 					categories={categories}
+					averageRating={averageRating}
 				/>
 			</ActiveLink>
 		</li>

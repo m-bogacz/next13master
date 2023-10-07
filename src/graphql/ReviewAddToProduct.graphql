@@ -18,4 +18,9 @@ mutation addReview(
 	) {
 		id
 	}
+	publishManyReviewsConnection(to: PUBLISHED, where: { product: { id: $productId } }) {
+		aggregate {
+			count
+		}
+	}
 }

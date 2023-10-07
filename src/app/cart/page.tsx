@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { cookies } from "next/headers";
-import { getCart } from "@/api/cartApi";
+
 import { ShoppingCartItem } from "@/ui/atoms/ShoppingCartItem";
+import { getCart } from "@/api/cartApi";
 
 export default async function CartPage() {
 	const cart = await getCart();

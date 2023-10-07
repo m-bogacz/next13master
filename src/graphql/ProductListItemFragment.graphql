@@ -2,6 +2,7 @@ fragment ProductListItem on Product {
 	id
 	name
 	description
+	averageRating
 	categories {
 		name
 		slug

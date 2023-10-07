@@ -7,12 +7,14 @@ export const ProductItemLink = ({
 	images,
 	price,
 	categories,
+	averageRating,
 	size = "medium",
 }: {
 	name: string;
 	price: number;
 	categories: ProductListItemFragment["categories"];
 	images: ProductListItemFragment["images"];
+	averageRating: ProductListItemFragment["averageRating"];
 	size: "small" | "medium" | "big";
 }) => {
 	const getSize = size === "small" ? "w-52" : size === "big" ? "w-72" : "";
@@ -23,6 +25,7 @@ export const ProductItemLink = ({
 				name={name}
 				price={price}
 				category={categories[0]?.name ?? "other"}
+				averageRating={averageRating ?? 1}
 			/>
 		</article>
 	);

@@ -1,3 +1,4 @@
+import { RatingList } from "./RatingList";
 import { getFormatPrice } from "@/utils/getFormatPrice";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { type ProductListItemFragment } from "@/gql/graphql";
@@ -11,6 +12,7 @@ export const ProductItem = ({
 	description,
 	name,
 	id,
+	averageRating,
 }: ProductListItemFragment) => {
 	async function addToCartAction() {
 		"use server";
@@ -35,8 +37,10 @@ export const ProductItem = ({
 							);
 						})}
 						<div className="place-baseline mb-2 flex gap-2">
-							<span className="text-lg text-yellow-400 ">*******</span>
-							<span className="borderp-0.5 rounded-lg text-lg  text-slate-500">4/5</span>
+							<span className="text-lg text-yellow-400 ">
+								<RatingList rating={averageRating} />
+							</span>
+							<span className="borderp-0.5 rounded-lg text-lg  text-slate-500">{`${averageRating}/5`}</span>
 						</div>
 					</div>
 					<form action={addToCartAction}>

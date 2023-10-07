@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { revalidateTag } from "next/cache";
-import { executeGraphql } from "./getProductsList";
+import { executeGraphql } from "@/api/executeGraphql";
 import {
 	type CartFragment,
 	CartGetByIdDocument,

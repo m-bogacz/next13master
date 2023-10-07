@@ -11,6 +11,7 @@ import { ProductList } from "@/ui/organisms/ProductList";
 import { getPaginationInfo } from "@/utils/getPaginationInfo";
 import { PRODUCTS_CATEGORY_COUNT_PER_PAGE } from "@/utils/const";
 import { Pagination } from "@/ui/organisms/Pagination";
+import { type ProductOrderByInput } from "@/gql/graphql";
 
 export const generateMetadata = async ({
 	params,
@@ -27,17 +28,24 @@ export const generateMetadata = async ({
 
 export default async function Categories({
 	params,
+	searchParams,
 }: {
 	params: { category: string; slug: string; pageNumber: number };
+	searchParams: { sortBy: ProductOrderByInput };
 }) {
 	const categories = await getProductsCountByCategory(params.slug);
 	const category = await getCategoryNameBySlug(params.slug);
 
-	const [showProducts, skipProduct] = getPaginationInfo(
+	const { productsPerPage, skipProduct } = getPaginationInfo(
 		params.pageNumber,
 		PRODUCTS_CATEGORY_COUNT_PER_PAGE,
 	);
-	const data = await getProductsByCategoryPerPage(params.slug, showProducts, skipProduct);
+	const data = await getProductsByCategoryPerPage(
+		params.slug,
+		productsPerPage,
+		skipProduct,
+		searchParams.sortBy,
+	);
 
 	if (!data.categories[0]?.products || data.categories[0]?.products.length === 0) notFound();
 
@@ -47,6 +55,7 @@ export default async function Categories({
 			<ProductList products={data.categories[0].products} />
 			<article className="mt-5">
 				<Pagination
+					sortBy={searchParams.sortBy}
 					countPerPage={PRODUCTS_CATEGORY_COUNT_PER_PAGE}
 					productsCount={categories ?? 0}
 				/>

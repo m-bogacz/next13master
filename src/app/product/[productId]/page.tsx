@@ -48,7 +48,7 @@ export default async function SingleProductPage({ params }: { params: { productI
 				)}
 			</Suspense>
 
-			<Reviews id={product.id} reviews={product.reviews} />
+			<Reviews id={product.id} />
 		</main>
 	);
 }

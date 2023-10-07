@@ -1,6 +1,6 @@
 "use client";
 
-import { RatingList } from "../molecules/RatingList";
+import { RatingList } from "./RatingList";
 
 import { type ReviewsProductItemFragment } from "@/gql/graphql";
 
