@@ -3,10 +3,11 @@ import { type Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { ProductItem } from "@/ui/molecules/SingleProductItem";
-import { getProductById } from "@/api/getProductsList";
+
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 
 import { Reviews } from "@/ui/organisms/Reviews";
+import { getProductById } from "@/api/getProductsList";
 
 // export const generateStaticParams = async () => {
 // 	const products = await getProductsList();
