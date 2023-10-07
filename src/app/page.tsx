@@ -1,35 +1,21 @@
 import { ArrowRight } from "lucide-react";
-
-import { type Route } from "next";
-import { getCollectionsAll, getProductsCountList } from "@/api/getProductsList";
+import { Suspense } from "react";
+import { getProductsCountList } from "@/api/getProductsList";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 import { ProductList } from "@/ui/organisms/ProductList";
-import { ProductImage } from "@/ui/atoms/ProductImage";
+
+import { CollectionsList } from "@/ui/organisms/CollectionsList";
 
 export default async function Home() {
 	const products = await getProductsCountList();
-	const collections = await getCollectionsAll();
 
 	return (
 		<main className="flex flex-col items-center">
-			<section className="mt-5 flex w-full flex-col gap-5 divide-y">
-				<ul className="flex w-full flex-grow flex-wrap justify-around">
-					{collections.map((collection) => {
-						return (
-							<li key={collection.name}>
-								<ActiveLink exact={true} href={`/collections/${collection.slug}` as Route}>
-									<span>{collection.name}</span>
-									{collection.image && collection.image.url ? (
-										<ProductImage src={collection.image.url} alt={collection.name} />
-									) : null}
-								</ActiveLink>
-							</li>
-						);
-					})}
-				</ul>
-				<div />
-			</section>
-			<ProductList products={products} />
+			<CollectionsList />
+
+			<Suspense fallback="loading...">
+				<ProductList products={products} />
+			</Suspense>
 
 			<ActiveLink
 				href="/products"
