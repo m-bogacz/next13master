@@ -11,7 +11,9 @@ export default async function Home() {
 
 	return (
 		<main className="flex flex-col items-center">
-			<CollectionsList />
+			<Suspense fallback="loading...">
+				<CollectionsList />
+			</Suspense>
 
 			<Suspense fallback="loading...">
 				<ProductList products={products} />

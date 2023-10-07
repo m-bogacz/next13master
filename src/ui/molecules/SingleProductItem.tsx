@@ -22,7 +22,7 @@ export const ProductItem = ({
 	}
 	return (
 		<article className="p-4">
-			<h3 className="mb-10 text-center text-3xl text-slate-700">{name}</h3>
+			<h1 className="mb-10 text-center text-3xl text-slate-700">{name}</h1>
 			<div className="grid gap-20 md:grid-cols-2 ">
 				{images[0] && <ProductImage src={images[0].url} alt={name} />}
 				<div className="md:max-w-lg">
