@@ -16,9 +16,9 @@ import * as types from './graphql';
 const documents = {
     "mutation CartAddProduct($orderId: ID!, $productId: ID!, $total: Int!) {\n  createOrderItem(\n    data: {order: {connect: {id: $orderId}}, product: {connect: {id: $productId}}, quantity: 1, total: $total}\n  ) {\n    id\n  }\n}": types.CartAddProductDocument,
     "mutation CartChangeOrderItemQuantity($itemId: ID!, $quantity: Int!) {\n  updateOrderItem(where: {id: $itemId}, data: {quantity: $quantity}) {\n    id\n  }\n}": types.CartChangeOrderItemQuantityDocument,
-    "mutation CartCreate {\n  createOrder(data: {total: 0, email: \"test@wp.pl\", stripeCheckoutId: \"tetete\"}) {\n    ...Cart\n  }\n}": types.CartCreateDocument,
+    "mutation CartCreate($email: String!, $stripeCheckoutId: String!, $total: Int!) {\n  createOrder(\n    data: {total: $total, email: $email, stripeCheckoutId: $stripeCheckoutId}\n  ) {\n    ...Cart\n  }\n}": types.CartCreateDocument,
     "query CartGetById($id: ID!) {\n  order(where: {id: $id}, stage: DRAFT) {\n    ...Cart\n  }\n}": types.CartGetByIdDocument,
-    "fragment Cart on Order {\n  id\n  orderItems {\n    ...CartOrderItem\n  }\n}": types.CartFragmentDoc,
+    "fragment Cart on Order {\n  id\n  email\n  orderItems {\n    ...CartOrderItem\n  }\n}": types.CartFragmentDoc,
     "fragment CartOrderItem on OrderItem {\n  id\n  quantity\n  total\n  product {\n    ...ProductListItem\n  }\n}": types.CartOrderItemFragmentDoc,
     "mutation CartRemoveOrderItem($itemId: ID!) {\n  deleteOrderItem(where: {id: $itemId}) {\n    id\n  }\n}": types.CartRemoveOrderItemDocument,
     "mutation CartUpsertOrderItem($orderId: ID!, $productId: ID!, $quantity: Int!, $orderItemId: ID) {\n  upsertOrderItem(\n    upsert: {create: {quantity: 1, total: 1, product: {connect: {id: $productId}}, order: {connect: {id: $orderId}}}, update: {quantity: $quantity}}\n    where: {id: $orderItemId}\n  ) {\n    id\n  }\n}": types.CartUpsertOrderItemDocument,
@@ -26,6 +26,7 @@ const documents = {
     "query CategoryNameGetBySlug($slug: String) {\n  categories(where: {slug: $slug}) {\n    name\n  }\n}": types.CategoryNameGetBySlugDocument,
     "query CollectionsNameGetBySlug($slug: String) {\n  collections(where: {slug: $slug}) {\n    id\n    name\n  }\n}": types.CollectionsNameGetBySlugDocument,
     "query CollectionsGetAll {\n  collections {\n    name\n    slug\n    image {\n      url\n    }\n  }\n}": types.CollectionsGetAllDocument,
+    "query OrdersGetByEmail($email: String!) {\n  orders(where: {email: $email}) {\n    id\n    orderItems {\n      id\n      quantity\n      total\n      product {\n        name\n        price\n        images {\n          url\n        }\n      }\n    }\n  }\n}": types.OrdersGetByEmailDocument,
     "fragment PaginationPageInfo on PageInfo {\n  hasNextPage\n  hasPreviousPage\n  startCursor\n  endCursor\n  pageSize\n}": types.PaginationPageInfoFragmentDoc,
     "query ProductCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}\n\nquery ProductsCountByCategory($slug: String) {\n  categoriesConnection(where: {slug: $slug}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductCountDocument,
     "query ProductGetByCollectionsSlug($slug: String) {\n  collections(where: {slug: $slug}) {\n    name\n    description\n    products {\n      ...ProductListItem\n    }\n  }\n}": types.ProductGetByCollectionsSlugDocument,
@@ -57,7 +58,7 @@ export function graphql(source: "mutation CartChangeOrderItemQuantity($itemId: I
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation CartCreate {\n  createOrder(data: {total: 0, email: \"test@wp.pl\", stripeCheckoutId: \"tetete\"}) {\n    ...Cart\n  }\n}"): typeof import('./graphql').CartCreateDocument;
+export function graphql(source: "mutation CartCreate($email: String!, $stripeCheckoutId: String!, $total: Int!) {\n  createOrder(\n    data: {total: $total, email: $email, stripeCheckoutId: $stripeCheckoutId}\n  ) {\n    ...Cart\n  }\n}"): typeof import('./graphql').CartCreateDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -65,7 +66,7 @@ export function graphql(source: "query CartGetById($id: ID!) {\n  order(where: {
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "fragment Cart on Order {\n  id\n  orderItems {\n    ...CartOrderItem\n  }\n}"): typeof import('./graphql').CartFragmentDoc;
+export function graphql(source: "fragment Cart on Order {\n  id\n  email\n  orderItems {\n    ...CartOrderItem\n  }\n}"): typeof import('./graphql').CartFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -94,6 +95,10 @@ export function graphql(source: "query CollectionsNameGetBySlug($slug: String) {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query CollectionsGetAll {\n  collections {\n    name\n    slug\n    image {\n      url\n    }\n  }\n}"): typeof import('./graphql').CollectionsGetAllDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query OrdersGetByEmail($email: String!) {\n  orders(where: {email: $email}) {\n    id\n    orderItems {\n      id\n      quantity\n      total\n      product {\n        name\n        price\n        images {\n          url\n        }\n      }\n    }\n  }\n}"): typeof import('./graphql').OrdersGetByEmailDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

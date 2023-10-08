@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { revalidateTag } from "next/cache";
+import { currentUser } from "@clerk/nextjs";
 import { executeGraphql } from "@/api/executeGraphql";
 import {
 	type CartFragment,
@@ -7,6 +8,7 @@ import {
 	CartCreateDocument,
 	ProductGetByIdDocument,
 	CartUpsertOrderItemDocument,
+	OrdersGetByEmailDocument,
 } from "@/gql/graphql";
 
 export async function getOrCreateCart(): Promise<CartFragment> {
@@ -40,8 +42,21 @@ export async function getCart() {
 		return cart.order;
 	}
 }
-export function createCart() {
-	return executeGraphql({ query: CartCreateDocument, type: "mutation" });
+export async function createCart() {
+	const user = await currentUser();
+	if (!user?.emailAddresses[0]?.emailAddress) {
+		throw new Error("User not found");
+	}
+
+	return executeGraphql({
+		query: CartCreateDocument,
+		variables: {
+			email: user.emailAddresses[0].emailAddress,
+			stripeCheckoutId: "",
+			total: 1,
+		},
+		type: "mutation",
+	});
 }
 
 export async function addProductToCart(orderId: string, productId: string) {
@@ -73,3 +88,16 @@ export async function addProductToCart(orderId: string, productId: string) {
 
 	revalidateTag("cart");
 }
+
+export const getOrdersByEmail = async (email: string) => {
+	const { orders } = await executeGraphql({
+		query: OrdersGetByEmailDocument,
+		variables: { email },
+		next: {
+			tags: ["orders"],
+		},
+		cache: "no-store",
+	});
+
+	return orders;
+};

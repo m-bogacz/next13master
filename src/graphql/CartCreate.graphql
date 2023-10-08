@@ -1,5 +1,5 @@
-mutation CartCreate {
-	createOrder(data: { total: 0, email: "test@wp.pl", stripeCheckoutId: "tetete" }) {
+mutation CartCreate($email: String!, $stripeCheckoutId: String!, $total: Int!) {
+	createOrder(data: { total: $total, email: $email, stripeCheckoutId: $stripeCheckoutId }) {
 		...Cart
 	}
 }
