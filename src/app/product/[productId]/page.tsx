@@ -7,12 +7,12 @@ import { ProductItem } from "@/ui/molecules/SingleProductItem";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 
 import { Reviews } from "@/ui/organisms/Reviews";
-import { getProductById, getProductsList } from "@/api/getProductsList";
+import { getProductById, getProductsCountList } from "@/api/getProductsList";
 
 export const generateStaticParams = async () => {
-	const products = await getProductsList();
+	const products = await getProductsCountList();
 
-	return products.slice(0, 4).map((product) => ({
+	return products.map((product) => ({
 		productId: product.id,
 	}));
 };
