@@ -1,6 +1,7 @@
 query ProductGetByCollectionsSlug($slug: String) {
 	collections(where: { slug: $slug }) {
 		name
+		description
 		products {
 			...ProductListItem
 		}

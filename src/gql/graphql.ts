@@ -10835,7 +10835,7 @@ export type ProductGetByCollectionsSlugQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByCollectionsSlugQuery = { collections: Array<{ name: string, products: Array<{ id: string, name: string, description: string, averageRating: number, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> }> };
+export type ProductGetByCollectionsSlugQuery = { collections: Array<{ name: string, description?: string | null, products: Array<{ id: string, name: string, description: string, averageRating: number, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> }> };
 
 export type ProductGetByIdQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -10871,7 +10871,7 @@ export type ProductsGetByCategoryPerPageQueryVariables = Exact<{
 }>;
 
 
-export type ProductsGetByCategoryPerPageQuery = { categories: Array<{ products: Array<{ id: string, name: string, description: string, averageRating: number, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> }> };
+export type ProductsGetByCategoryPerPageQuery = { categories: Array<{ name: string, products: Array<{ id: string, name: string, description: string, averageRating: number, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> }>, categoriesConnection: { aggregate: { count: number } } };
 
 export type ProductCountByCategoryQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -11214,6 +11214,7 @@ export const ProductGetByCollectionsSlugDocument = new TypedDocumentString(`
     query ProductGetByCollectionsSlug($slug: String) {
   collections(where: {slug: $slug}) {
     name
+    description
     products {
       ...ProductListItem
     }
@@ -11306,8 +11307,14 @@ export const ProductUpdateAvargeRatingDocument = new TypedDocumentString(`
 export const ProductsGetByCategoryPerPageDocument = new TypedDocumentString(`
     query ProductsGetByCategoryPerPage($slug: String, $first: Int, $skip: Int, $orderBy: ProductOrderByInput) {
   categories(where: {slug: $slug}) {
+    name
     products(first: $first, skip: $skip, orderBy: $orderBy) {
       ...ProductListItem
+    }
+  }
+  categoriesConnection {
+    aggregate {
+      count
     }
   }
 }

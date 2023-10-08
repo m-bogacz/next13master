@@ -1,19 +1,18 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-
 import { ProductList } from "@/ui/organisms/ProductList";
-import { getCollectionNameBySlug, getProductsByCollectionsSlug } from "@/api/getProductsList";
+import { getProductsByCollectionsSlug } from "@/api/getProductsList";
 
 export const generateMetadata = async ({
 	params,
 }: {
 	params: { slug: string };
 }): Promise<Metadata> => {
-	const category = await getCollectionNameBySlug(params.slug);
+	const collection = await getProductsByCollectionsSlug(params.slug);
 
 	return {
-		title: category,
-		description: category,
+		title: collection?.name,
+		description: collection?.description,
 	};
 };
 

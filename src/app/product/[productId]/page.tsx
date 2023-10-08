@@ -12,7 +12,7 @@ import { getProductById, getProductsList } from "@/api/getProductsList";
 export const generateStaticParams = async () => {
 	const products = await getProductsList();
 
-	return products.slice(0, 5).map((product) => ({
+	return products.slice(0, 4).map((product) => ({
 		productId: product.id,
 	}));
 };

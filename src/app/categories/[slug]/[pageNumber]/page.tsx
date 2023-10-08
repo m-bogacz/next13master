@@ -1,11 +1,7 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 
-import {
-	getProductsByCategoryPerPage,
-	getCategoryNameBySlug,
-	getProductsCountByCategory,
-} from "@/api/getProductsList";
+import { getProductsByCategoryPerPage, getCategoryNameBySlug } from "@/api/getProductsList";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 import { getPaginationInfo } from "@/utils/getPaginationInfo";
@@ -33,9 +29,6 @@ export default async function Categories({
 	params: { category: string; slug: string; pageNumber: number };
 	searchParams: { sortBy: ProductOrderByInput };
 }) {
-	const categories = await getProductsCountByCategory(params.slug);
-	const category = await getCategoryNameBySlug(params.slug);
-
 	const { productsPerPage, skipProduct } = getPaginationInfo(
 		params.pageNumber,
 		PRODUCTS_CATEGORY_COUNT_PER_PAGE,
@@ -51,13 +44,13 @@ export default async function Categories({
 
 	return (
 		<div>
-			<h1>{category}</h1>
+			<h1>{data.categories[0].name}</h1>
 			<ProductList products={data.categories[0].products} />
 			<article className="mt-5">
 				<Pagination
 					sortBy={searchParams.sortBy}
 					countPerPage={PRODUCTS_CATEGORY_COUNT_PER_PAGE}
-					productsCount={categories ?? 0}
+					productsCount={data.categoriesConnection.aggregate.count}
 				/>
 			</article>
 		</div>

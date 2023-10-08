@@ -28,12 +28,12 @@ const documents = {
     "query CollectionsGetAll {\n  collections {\n    name\n    slug\n    image {\n      url\n    }\n  }\n}": types.CollectionsGetAllDocument,
     "fragment PaginationPageInfo on PageInfo {\n  hasNextPage\n  hasPreviousPage\n  startCursor\n  endCursor\n  pageSize\n}": types.PaginationPageInfoFragmentDoc,
     "query ProductCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}\n\nquery ProductsCountByCategory($slug: String) {\n  categoriesConnection(where: {slug: $slug}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductCountDocument,
-    "query ProductGetByCollectionsSlug($slug: String) {\n  collections(where: {slug: $slug}) {\n    name\n    products {\n      ...ProductListItem\n    }\n  }\n}": types.ProductGetByCollectionsSlugDocument,
+    "query ProductGetByCollectionsSlug($slug: String) {\n  collections(where: {slug: $slug}) {\n    name\n    description\n    products {\n      ...ProductListItem\n    }\n  }\n}": types.ProductGetByCollectionsSlugDocument,
     "query ProductGetById($id: ID) {\n  product(where: {id: $id}) {\n    ...ProductListItem\n    reviews {\n      ...ReviewsProductItem\n    }\n  }\n}": types.ProductGetByIdDocument,
     "query ProductGetPerPage($first: Int!, $skip: Int!, $orderBy: ProductOrderByInput) {\n  products(first: $first, skip: $skip, orderBy: $orderBy) {\n    ...ProductListItem\n  }\n  productsConnection {\n    pageInfo {\n      ...PaginationPageInfo\n    }\n  }\n}": types.ProductGetPerPageDocument,
     "fragment ProductListItem on Product {\n  id\n  name\n  description\n  averageRating\n  categories {\n    name\n    slug\n  }\n  price\n  images(first: 1) {\n    url\n  }\n}": types.ProductListItemFragmentDoc,
     "mutation ProductUpdateAvargeRating($id: ID!, $averageRating: Int!) {\n  updateProduct(where: {id: $id}, data: {averageRating: $averageRating}) {\n    averageRating\n  }\n}": types.ProductUpdateAvargeRatingDocument,
-    "query ProductsGetByCategoryPerPage($slug: String, $first: Int, $skip: Int, $orderBy: ProductOrderByInput) {\n  categories(where: {slug: $slug}) {\n    products(first: $first, skip: $skip, orderBy: $orderBy) {\n      ...ProductListItem\n    }\n  }\n}\n\nquery ProductCountByCategory($slug: String) {\n  categories(where: {slug: $slug}) {\n    products {\n      id\n    }\n  }\n}": types.ProductsGetByCategoryPerPageDocument,
+    "query ProductsGetByCategoryPerPage($slug: String, $first: Int, $skip: Int, $orderBy: ProductOrderByInput) {\n  categories(where: {slug: $slug}) {\n    name\n    products(first: $first, skip: $skip, orderBy: $orderBy) {\n      ...ProductListItem\n    }\n  }\n  categoriesConnection {\n    aggregate {\n      count\n    }\n  }\n}\n\nquery ProductCountByCategory($slug: String) {\n  categories(where: {slug: $slug}) {\n    products {\n      id\n    }\n  }\n}": types.ProductsGetByCategoryPerPageDocument,
     "query ProdutsGetByCategorySlug($slug: String) {\n  categories(where: {slug: $slug}) {\n    products {\n      ...ProductListItem\n    }\n  }\n}": types.ProdutsGetByCategorySlugDocument,
     "query ProductsGetByOrderBy($orderBy: ProductOrderByInput) {\n  products(orderBy: $orderBy) {\n    ...ProductListItem\n  }\n}": types.ProductsGetByOrderByDocument,
     "query ProductsGetList {\n  products {\n    ...ProductListItem\n  }\n}\n\nquery ProductsGetCountList($count: Int!) {\n  products(first: $count) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListDocument,
@@ -105,7 +105,7 @@ export function graphql(source: "query ProductCount {\n  productsConnection {\n 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query ProductGetByCollectionsSlug($slug: String) {\n  collections(where: {slug: $slug}) {\n    name\n    products {\n      ...ProductListItem\n    }\n  }\n}"): typeof import('./graphql').ProductGetByCollectionsSlugDocument;
+export function graphql(source: "query ProductGetByCollectionsSlug($slug: String) {\n  collections(where: {slug: $slug}) {\n    name\n    description\n    products {\n      ...ProductListItem\n    }\n  }\n}"): typeof import('./graphql').ProductGetByCollectionsSlugDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -125,7 +125,7 @@ export function graphql(source: "mutation ProductUpdateAvargeRating($id: ID!, $a
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query ProductsGetByCategoryPerPage($slug: String, $first: Int, $skip: Int, $orderBy: ProductOrderByInput) {\n  categories(where: {slug: $slug}) {\n    products(first: $first, skip: $skip, orderBy: $orderBy) {\n      ...ProductListItem\n    }\n  }\n}\n\nquery ProductCountByCategory($slug: String) {\n  categories(where: {slug: $slug}) {\n    products {\n      id\n    }\n  }\n}"): typeof import('./graphql').ProductsGetByCategoryPerPageDocument;
+export function graphql(source: "query ProductsGetByCategoryPerPage($slug: String, $first: Int, $skip: Int, $orderBy: ProductOrderByInput) {\n  categories(where: {slug: $slug}) {\n    name\n    products(first: $first, skip: $skip, orderBy: $orderBy) {\n      ...ProductListItem\n    }\n  }\n  categoriesConnection {\n    aggregate {\n      count\n    }\n  }\n}\n\nquery ProductCountByCategory($slug: String) {\n  categories(where: {slug: $slug}) {\n    products {\n      id\n    }\n  }\n}"): typeof import('./graphql').ProductsGetByCategoryPerPageDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
