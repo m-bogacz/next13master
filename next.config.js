@@ -4,6 +4,7 @@ const nextConfig = {
 		domains: ["media.graphassets.com"],
 	},
 	pageExtensions: ["ts", "tsx", "mdx"],
+	output: "standalone",
 	experimental: {
 		typedRoutes: true,
 		serverActions: true,
