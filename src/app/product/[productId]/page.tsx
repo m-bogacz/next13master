@@ -7,15 +7,15 @@ import { ProductItem } from "@/ui/molecules/SingleProductItem";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 
 import { Reviews } from "@/ui/organisms/Reviews";
-import { getProductById } from "@/api/getProductsList";
+import { getProductById, getProductsList } from "@/api/getProductsList";
 
-// export const generateStaticParams = async () => {
-// 	const products = await getProductsList();
+export const generateStaticParams = async () => {
+	const products = await getProductsList();
 
-// 	return products.map((product) => ({
-// 		productId: product.id,
-// 	}));
-// };
+	return products.slice(0, 5).map((product) => ({
+		productId: product.id,
+	}));
+};
 
 export const generateMetadata = async ({
 	params,
