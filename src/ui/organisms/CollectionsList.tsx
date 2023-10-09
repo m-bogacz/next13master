@@ -8,8 +8,8 @@ export const CollectionsList = async () => {
 	const collections = await getCollectionsAll();
 
 	return (
-		<section className="mt-5 flex w-full flex-col gap-5 divide-y">
-			<ul className="flex w-full flex-grow flex-wrap justify-around">
+		<section className="p-5">
+			<ul className=" mt-4 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
 				{collections.map((collection) => {
 					return (
 						<li key={collection.name}>

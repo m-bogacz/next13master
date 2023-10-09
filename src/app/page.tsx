@@ -16,7 +16,10 @@ export default async function Home() {
 			</Suspense>
 
 			<Suspense fallback="loading...">
-				<ProductList products={products} />
+				<div className="mt-5 p-3">
+					<h4 className="ml-10 divide-y text-lg text-slate-600">Products</h4>
+					<ProductList products={products} />
+				</div>
 			</Suspense>
 
 			<ActiveLink
