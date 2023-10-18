@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { revalidateTag } from "next/cache";
-import { currentUser } from "@clerk/nextjs";
+// import { currentUser } from "@clerk/nextjs";
 import { executeGraphql } from "@/api/executeGraphql";
 import {
 	type CartFragment,
@@ -43,15 +43,15 @@ export async function getCart() {
 	}
 }
 export async function createCart() {
-	const user = await currentUser();
-	if (!user?.emailAddresses[0]?.emailAddress) {
-		throw new Error("User not found");
-	}
+	// const user = await currentUser();
+	// if (!user?.emailAddresses[0]?.emailAddress) {
+	// 	throw new Error("User not found");
+	// }
 
 	return executeGraphql({
 		query: CartCreateDocument,
 		variables: {
-			email: user.emailAddresses[0].emailAddress,
+			email: "test@test.pl",
 			stripeCheckoutId: "",
 			total: 1,
 		},
