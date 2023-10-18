@@ -19,7 +19,7 @@ export const ProductListItemDescription = ({
 			<section className="mt-3 flex items-center justify-between gap-1">
 				<h2 className="text-sm font-semibold text-slate-700">{name}</h2>
 				<p className="text-sm font-bold text-slate-900" data-testid="product-price">
-					{getFormatPrice(price / 100)}
+					{getFormatPrice(price)}
 				</p>
 				{description && <p>{description}</p>}
 			</section>

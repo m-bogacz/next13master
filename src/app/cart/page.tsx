@@ -62,21 +62,48 @@ export default async function CartPage() {
 
 	return (
 		<section>
-			<header className="border-b pb-10">
+			<header className="pb-10">
 				<h2 className="opacity-9 text-4xl font-bold text-black">Shopping Cart</h2>
 			</header>
 
-			<ul className="grid grid-cols-1  divide-y">
-				{cart.orderItems.map((item) => {
-					if (!item.product) return null;
-					return <ShoppingCartItem key={item.id} {...item} />;
-				})}
-			</ul>
-			<form action={handleStripePaymentAction}>
-				<button type="submit" className="rounded-md bg-slate-700 px-4 py-2 text-white">
-					Pay
-				</button>
-			</form>
+			<section className="grid grid-cols-1 md:grid-cols-2">
+				<ul className="grid grid-cols-1 border-t">
+					{cart.orderItems.map((item) => {
+						if (!item.product) return null;
+						return <ShoppingCartItem key={item.id} {...item} />;
+					})}
+				</ul>
+				<div className="flex w-full flex-col p-5">
+					<section className="flex flex-col gap-10 bg-gray-200 p-5">
+						<h3 className="text-xl">Order Summary</h3>
+
+						<div className="flex justify-between border-b-cyan-200">
+							<span className="text-sm font-medium text-slate-500">SubTotal</span>
+							<span>99.99 PLN</span>
+						</div>
+						<div className="flex justify-between border-b-cyan-200">
+							<span className="text-sm font-medium text-slate-500">Total</span>
+							<span>4 products</span>
+						</div>
+						<div className="flex justify-between border-b-cyan-200">
+							<span className="text-sm font-medium text-slate-500">Cost delivery</span>
+							<span>16.90</span>
+						</div>
+						<div className="flex justify-between border-b-cyan-200">
+							<span className="text-sm font-medium text-slate-500">Order total </span>
+							<span>112.32 PLN</span>
+						</div>
+						<form action={handleStripePaymentAction}>
+							<button
+								type="submit"
+								className="w-full rounded-md bg-slate-700 px-20 py-2 text-center text-white"
+							>
+								Checkout
+							</button>
+						</form>
+					</section>
+				</div>
+			</section>
 		</section>
 	);
 }

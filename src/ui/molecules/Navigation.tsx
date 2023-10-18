@@ -7,6 +7,7 @@ const navLinks = [
 	{ href: "/categories/t-shirts/1", exact: false, label: "T-Shirts" },
 	{ href: "/categories/hoodies/1", exact: false, label: "Hoodies" },
 	{ href: "/categories/accessories/1", exact: false, label: "Accessories" },
+	{ href: "/orders", exact: false, label: "My Orders" },
 ];
 
 export const Navigation = () => {
