@@ -11,7 +11,7 @@ export const ShoppingCartItem = ({ product, quantity, id }: CartOrderItemFragmen
 	}
 
 	return (
-		<li className="flex w-full max-w-screen-lg py-8">
+		<li className="flex  w-full max-w-screen-lg py-8">
 			<div className="w-96 ">
 				<ProductImage
 					src={product.images[0]?.url ?? ""}
