@@ -1,4 +1,7 @@
 "use client";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
 import { experimental_useOptimistic as useOptimistic } from "react";
 import { changeOrderItemQuantity } from "@/actions/cart";
 

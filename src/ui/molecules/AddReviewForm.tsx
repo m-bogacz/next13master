@@ -1,4 +1,7 @@
 "use client";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
 import { Suspense, experimental_useOptimistic as useOptimistic } from "react";
 
 import { InputText } from "../atoms/Inputs/InputText";
