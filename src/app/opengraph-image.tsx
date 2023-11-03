@@ -1,4 +1,4 @@
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const contentType = "image/png";
@@ -9,7 +9,6 @@ export const size = {
 
 export const alt = "Open Graph Image";
 
-// eslint-disable-next-line import/no-default-export
 export default function OpenGraphImage() {
 	return new ImageResponse(
 		(

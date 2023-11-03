@@ -1,11 +1,8 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Header } from "@/ui/organisms/Header";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "E-commerce next13master",
@@ -16,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<ClerkProvider>
 			<html lang="pl">
-				<body className={`${inter.className}  flex min-h-screen min-w-min flex-col items-center `}>
+				<body className={"flex min-h-screen min-w-min flex-col items-center"}>
 					<div className="min-w-7xl flex min-h-screen w-8/12 flex-col">
 						<Header />
 						<div className="flex flex-grow flex-col">{children}</div>
