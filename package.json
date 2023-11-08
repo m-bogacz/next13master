@@ -11,7 +11,7 @@
 		"codegen": "graphql-codegen --config .graphqlrc.ts"
 	},
 	"dependencies": {
-		"@clerk/nextjs": "^4.26.1",
+		"@clerk/nextjs": "^4.26.2",
 		"@faker-js/faker": "^8.2.0",
 		"@graphql-typed-document-node/core": "^3.2.0",
 		"@mdx-js/loader": "^2.3.0",
@@ -20,7 +20,7 @@
 		"@next/mdx": "^13.5.6",
 		"@parcel/watcher": "^2.3.0",
 		"@tailwindcss/typography": "^0.5.10",
-		"@types/mdx": "^2.0.9",
+		"@types/mdx": "^2.0.10",
 		"@types/node": "20.5.9",
 		"@types/react": "18.2.21",
 		"@types/react-dom": "18.2.7",
@@ -36,15 +36,15 @@
 		"react-dom": "18.2.0",
 		"server-only": "^0.0.1",
 		"stripe": "^13.11.0",
-		"stripe-event-types": "^3.0.0",
+		"stripe-event-types": "^3.1.0",
 		"tailwindcss": "3.3.3",
 		"typescript": "5.2.2"
 	},
 	"devDependencies": {
 		"@graphql-codegen/cli": "5.0.0",
 		"@graphql-codegen/client-preset": "4.1.0",
-		"@typescript-eslint/eslint-plugin": "^6.9.0",
-		"@typescript-eslint/parser": "^6.9.0",
+		"@typescript-eslint/eslint-plugin": "^6.10.0",
+		"@typescript-eslint/parser": "^6.10.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-import": "^2.29.0",
 		"prettier": "^3.0.3",
