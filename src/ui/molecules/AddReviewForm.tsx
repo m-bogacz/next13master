@@ -2,7 +2,7 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-import { Suspense } from "react";
+import { Suspense, useOptimistic } from "react";
 
 import { InputText } from "../atoms/Inputs/InputText";
 
@@ -10,6 +10,7 @@ import { Rating } from "../organisms/Rating";
 import { ReviewsList } from "./ReviewsList";
 // import { type ReviewsProductItemFragment } from "@/gql/graphql";
 import { addReview } from "@/api/getReviewsList";
+import { type ReviewsProductItemFragment } from "@/gql/graphql";
 
 type ReviewsProps = {
 	reviews: {
@@ -23,10 +24,10 @@ type ReviewsProps = {
 };
 
 export const AddReviewForm = ({ reviews, id }: ReviewsProps) => {
-	// const [optimisticReviews, setOptimisticReviews] = useOptimistic(
-	// 	reviews,
-	// 	(_state, newReview: ReviewsProductItemFragment) => [..._state, newReview],
-	// );
+	const [optimisticReviews, setOptimisticReviews] = useOptimistic(
+		reviews,
+		(_state, newReview: ReviewsProductItemFragment) => [..._state, newReview],
+	);
 
 	return (
 		<article className="col-auto grid w-full grid-cols-2">
@@ -54,7 +55,7 @@ export const AddReviewForm = ({ reviews, id }: ReviewsProps) => {
 									email: formData.get("email") as string,
 								};
 
-								// setOptimisticReviews({ ...obj, id });
+								setOptimisticReviews({ ...obj, id });
 								await addReview({ ...obj, productId: id });
 							}}
 							type="submit"
@@ -66,7 +67,7 @@ export const AddReviewForm = ({ reviews, id }: ReviewsProps) => {
 				</article>
 			</>
 			<Suspense fallback="loading...">
-				<ReviewsList reviews={reviews} />
+				<ReviewsList reviews={optimisticReviews} />
 			</Suspense>
 		</article>
 	);

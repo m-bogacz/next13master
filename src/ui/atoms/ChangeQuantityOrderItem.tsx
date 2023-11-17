@@ -1,5 +1,6 @@
 "use client";
 
+import { useOptimistic } from "react";
 import { changeOrderItemQuantity } from "@/actions/cart";
 
 export function ChangeQuantityOrderItem({
@@ -9,10 +10,10 @@ export function ChangeQuantityOrderItem({
 	itemId: string;
 	quantity: number;
 }) {
-	// const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(
-	// 	quantity,
-	// 	(_state, newQuantity: number) => newQuantity,
-	// );
+	const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(
+		quantity,
+		(_state, newQuantity: number) => newQuantity,
+	);
 
 	return (
 		<div className="flex max-w-lg flex-col items-center">
@@ -24,7 +25,7 @@ export function ChangeQuantityOrderItem({
 						type="submit"
 						data-testid="decrement"
 						formAction={async () => {
-							// setOptimisticQuantity(optimisticQuantity - 1);
+							setOptimisticQuantity(optimisticQuantity - 1);
 							await changeOrderItemQuantity(itemId, quantity - 1);
 						}}
 					>
@@ -32,7 +33,7 @@ export function ChangeQuantityOrderItem({
 					</button>
 				</form>
 				<span data-testid="quantity" className="w-8 text-center">
-					{quantity}
+					{optimisticQuantity}
 				</span>
 				<form className="flex">
 					<button
@@ -40,7 +41,7 @@ export function ChangeQuantityOrderItem({
 						type="submit"
 						data-testid="increment"
 						formAction={async () => {
-							// setOptimisticQuantity(quantity + 1);
+							setOptimisticQuantity(quantity + 1);
 							await changeOrderItemQuantity(itemId, quantity + 1);
 						}}
 					>
