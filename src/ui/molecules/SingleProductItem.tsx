@@ -29,7 +29,7 @@ export const ProductItem = ({
 					<span>{description}</span>
 					<div className="mt-8 flex w-full flex-col items-start justify-around gap-2">
 						<p className="text-2xl font-bold text-slate-700" data-testid="product-price">
-							{getFormatPrice(price / 100)}
+							{getFormatPrice(price)}
 						</p>
 						{categories.map((category) => {
 							return (

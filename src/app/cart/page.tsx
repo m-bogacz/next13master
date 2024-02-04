@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 import { ShoppingCartItem } from "@/ui/atoms/ShoppingCartItem";
 import { getCart } from "@/api/cartApi";
 
+import { getFormatPrice } from "@/utils/getFormatPrice";
+
 export default async function CartPage() {
 	const cart = await getCart();
 
@@ -20,7 +22,7 @@ export default async function CartPage() {
 		}
 
 		const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-			apiVersion: "2023-08-16",
+			apiVersion: "2023-10-16",
 			typescript: true,
 		});
 
@@ -38,11 +40,11 @@ export default async function CartPage() {
 					item.product
 						? {
 								price_data: {
-									currency: "usd",
+									currency: "PLN",
 									product_data: {
 										name: item.product.name,
 									},
-									unit_amount: item.product.price * 100,
+									unit_amount: item.product.price,
 								},
 								quantity: item.quantity,
 						  }
@@ -59,6 +61,13 @@ export default async function CartPage() {
 			redirect(session.url);
 		}
 	}
+
+	const subTotal = cart.orderItems.reduce((acc, item) => {
+		if (!item.product) return acc;
+		return acc + item.product.price * item.quantity;
+	}, 0);
+
+	const orderTotal = subTotal;
 
 	return (
 		<section>
@@ -79,19 +88,19 @@ export default async function CartPage() {
 
 						<div className="flex justify-between border-b-cyan-200">
 							<span className="text-sm font-medium text-slate-500">SubTotal</span>
-							<span>99.99 PLN</span>
+							<span>{getFormatPrice(subTotal)}</span>
 						</div>
 						<div className="flex justify-between border-b-cyan-200">
 							<span className="text-sm font-medium text-slate-500">Total</span>
-							<span>4 products</span>
+							<span>{cart.orderItems.length}</span>
 						</div>
 						<div className="flex justify-between border-b-cyan-200">
 							<span className="text-sm font-medium text-slate-500">Cost delivery</span>
-							<span>16.90</span>
+							<span>0.00</span>
 						</div>
 						<div className="flex justify-between border-b-cyan-200">
 							<span className="text-sm font-medium text-slate-500">Order total </span>
-							<span>112.32 PLN</span>
+							<span>{getFormatPrice(orderTotal)}</span>
 						</div>
 						<form action={handleStripePaymentAction}>
 							<button
