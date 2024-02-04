@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
-import Stripe from "stripe";
+import type Stripe from "stripe";
 import { cookies } from "next/headers";
 
 import { ShoppingCartItem } from "@/ui/atoms/ShoppingCartItem";
 import { getCart } from "@/api/cartApi";
+import { getStripeInstance } from "@/stripe/stripe";
 
 import { getFormatPrice } from "@/utils/getFormatPrice";
 
@@ -17,14 +18,7 @@ export default async function CartPage() {
 	async function handleStripePaymentAction() {
 		"use server";
 
-		if (!process.env.STRIPE_SECRET_KEY) {
-			throw new Error("Missing STRIPE_SECRET_KEY env variable");
-		}
-
-		const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-			apiVersion: "2023-10-16",
-			typescript: true,
-		});
+		const stripe = getStripeInstance();
 
 		const cart = await getCart();
 		if (!cart) {

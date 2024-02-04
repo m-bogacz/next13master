@@ -13,14 +13,11 @@ export async function POST(request: NextRequest): Promise<Response> {
 	) {
 		const id = body.productId;
 		const avargeRating = await getReviewProductsAvargeRating(id);
-		console.log(avargeRating);
+
 		await updateProductAvarageRating(id, avargeRating);
 
-		// console.log("result", result);
-
-		console.log(`Revalidating /product/${id}`);
 		revalidatePath(`/product/${id}`);
-		console.log(`Revalidating /products`);
+
 		revalidatePath(`/products`);
 		revalidateTag("review");
 		revalidateTag("product");

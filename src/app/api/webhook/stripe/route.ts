@@ -1,7 +1,8 @@
 /// <reference types="stripe-event-types" />
 
 import { type NextRequest } from "next/server";
-import Stripe from "stripe";
+import type Stripe from "stripe";
+import { getStripeInstance } from "@/stripe/stripe";
 
 export async function POST(req: NextRequest): Promise<Response> {
 	const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -13,10 +14,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 		return new Response("No Stripe secret key", { status: 500 });
 	}
 
-	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-		apiVersion: "2023-08-16",
-		typescript: true,
-	});
+	const stripe = getStripeInstance();
 
 	const signature = req.headers.get("stripe-signature");
 	if (!signature) {
@@ -31,7 +29,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 
 	switch (event.type) {
 		case "checkout.session.completed": {
-			console.log("event => ", event);
+			// console.log("event => ", event);
 			event.data.object.metadata?.cartId;
 		}
 	}
